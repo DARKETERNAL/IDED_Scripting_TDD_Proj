@@ -2,13 +2,9 @@
 
 namespace IDED_Scripting_TDD_Proj
 {
+    [TestFixture]
     public class Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void TestCreateAccount()
         {
@@ -31,8 +27,17 @@ namespace IDED_Scripting_TDD_Proj
         [Test]
         public void TestCreateAccountB()
         {
-            IAccount account_B1 = new Account_B(-100);
+            IAccount account_B1 = new Account_B(0);
             Assert.That(account_B1.Balance == 0);
+
+            IAccount account_B2 = new Account_B(100);
+            Assert.That(account_B2.Balance == 100);
+
+            IAccount account_B3 = new Account_B(2);
+            Assert.That(account_B3.Balance == 2);
+
+            IAccount account_B4 = new Account_B(-10);
+            Assert.That(account_B4.Balance == 0);
         }
 
         [Test]
@@ -75,6 +80,18 @@ namespace IDED_Scripting_TDD_Proj
             account_b1.Withdraw(-50);
 
             Assert.That(account_b1.Balance == 100);
+        }
+
+        [TestCase(0F)]
+        [TestCase(100F)]
+        [TestCase(2F)]
+        [TestCase(-10F)]
+        public void TestCreateAccountParameter(float balance)
+        {
+            IAccount account = new Account_B(balance);
+
+            //Assert.GreaterOrEqual(0, account.Balance);
+            Assert.That(account.Balance, Is.AtLeast(0));
         }
     }
 }
